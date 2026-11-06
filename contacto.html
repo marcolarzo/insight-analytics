@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Contacto | Insight Analytics</title><meta name="description" content="Conversemos sobre dashboards, automatización y analítica para tu negocio."><style>
+  #insight-contact-proto{font-family:Arial,Helvetica,sans-serif;color:#15314a;--ia-blue:#087cb7;--ia-navy:#102f48;--ia-ink:#15314a;--ia-muted:#5d7181;--ia-line:#dce5eb;--ia-paper:#fff;--ia-soft:#f4f7fa;}
+  #insight-contact-proto *{box-sizing:border-box;}
+  #insight-contact-proto .ia-page{background:var(--ia-paper);min-height:780px;}
+  #insight-contact-proto .ia-nav{background:var(--ia-blue);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 32px;}
+  #insight-contact-proto .ia-brand{font-family:Georgia,serif;font-size:23px;white-space:nowrap;}
+  #insight-contact-proto .ia-navlinks{display:flex;gap:22px;align-items:center;font-size:12px;}
+  #insight-contact-proto .ia-navlinks span{padding:5px 0;}
+  #insight-contact-proto .ia-current{border-bottom:2px solid #fff;}
+  #insight-contact-proto .ia-main{max-width:1120px;margin:auto;padding:50px 48px 28px;}
+  #insight-contact-proto .ia-eyebrow{color:#0873a9;letter-spacing:2px;font-size:11px;font-weight:700;text-transform:uppercase;}
+  #insight-contact-proto h1{font-size:42px;line-height:1.13;letter-spacing:-1.3px;font-weight:600;margin:14px 0 16px;}
+  #insight-contact-proto p{margin:0;}
+  #insight-contact-proto .ia-lead{color:var(--ia-muted);font-size:15px;line-height:1.7;max-width:570px;}
+  #insight-contact-proto .ia-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:52px;margin-top:34px;}
+  #insight-contact-proto .ia-advice{background:var(--ia-navy);color:#fff;border-radius:14px;padding:30px;align-self:start;}
+  #insight-contact-proto .ia-advice h2{font-size:23px;font-weight:500;line-height:1.3;margin:14px 0 12px;letter-spacing:-.4px;}
+  #insight-contact-proto .ia-advice p{font-size:14px;line-height:1.7;color:#c7d9e6;}
+  #insight-contact-proto .ia-small-icon{width:22px;height:22px;color:#9ed9f2;}
+  #insight-contact-proto .ia-services{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 30px;}
+  #insight-contact-proto .ia-services span{font-size:11px;padding:8px 10px;border-radius:5px;background:#22445f;color:#e2edf5;}
+  #insight-contact-proto .ia-contactline{display:flex;gap:10px;align-items:center;margin-top:15px;font-size:13px;color:#e5f0f7;overflow-wrap:anywhere;}
+  #insight-contact-proto .ia-contactline svg{width:16px;height:16px;flex-shrink:0;}
+  #insight-contact-proto .ia-advice hr{border:0;border-top:1px solid #35536a;margin:24px 0;}
+  #insight-contact-proto .ia-appointment{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;background:transparent;border:0;padding:0;color:#fff;font:inherit;min-height:44px;}
+  #insight-contact-proto .ia-appointment strong{font-weight:500;font-size:14px;}
+  #insight-contact-proto .ia-appointment small{display:block;color:#b9cddb;font-size:12px;margin-top:6px;}
+  #insight-contact-proto .ia-form h2{font-size:21px;margin:0 0 6px;font-weight:600;letter-spacing:-.3px;}
+  #insight-contact-proto .ia-form .ia-helper{color:var(--ia-muted);font-size:12px;line-height:1.6;margin-bottom:22px;}
+  #insight-contact-proto .ia-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;}
+  #insight-contact-proto .ia-field{display:flex;flex-direction:column;gap:8px;min-width:0;}
+  #insight-contact-proto label{font-size:12px;font-weight:600;color:#304b60;}
+  #insight-contact-proto .ia-optional{font-size:11px;color:var(--ia-muted);font-weight:400;}
+  #insight-contact-proto input,#insight-contact-proto select,#insight-contact-proto textarea{width:100%;border:1px solid #cbd8e1;border-radius:7px;background:#fff;color:#243e52;padding:12px;font:inherit;font-size:14px;min-height:44px;}
+  #insight-contact-proto input::placeholder,#insight-contact-proto textarea::placeholder{color:#8293a0;}
+  #insight-contact-proto input:focus,#insight-contact-proto textarea:focus,#insight-contact-proto select:focus{outline:2px solid #087cb7;outline-offset:2px;}
+  #insight-contact-proto .ia-full{grid-column:1/-1;}
+  #insight-contact-proto textarea{min-height:96px;resize:vertical;line-height:1.6;}
+  #insight-contact-proto .ia-submit{display:flex;align-items:center;justify-content:center;gap:12px;min-height:46px;background:#087cb7;color:#fff;border:0;border-radius:7px;padding:12px 22px;font:inherit;font-size:14px;font-weight:600;margin-top:20px;}
+  #insight-contact-proto .ia-submit svg{width:17px;height:17px;}
+  #insight-contact-proto .ia-privacy{display:flex;align-items:flex-start;gap:7px;margin-top:13px;font-size:11px;line-height:1.6;color:#627685;}
+  #insight-contact-proto .ia-privacy svg{width:13px;height:13px;flex-shrink:0;margin-top:2px;}
+  #insight-contact-proto .ia-footer{border-top:1px solid var(--ia-line);display:flex;justify-content:space-between;gap:16px;margin-top:36px;padding-top:18px;color:#738594;font-size:11px;line-height:1.5;}
+  #insight-contact-proto .ia-status{padding:14px 16px;background:#edf6fb;border-radius:7px;color:#24536b;font-size:13px;line-height:1.6;margin-top:14px;}
+  #insight-contact-proto .ia-booking{padding:18px 0 0;}
+  #insight-contact-proto .ia-booking p{color:#d2e2ed;font-size:12px;margin-bottom:12px;}
+  #insight-contact-proto .ia-booking label{color:#e0edf5;display:block;margin:12px 0 8px;}
+  #insight-contact-proto .ia-booking .ia-submit{background:#fff;color:#173b55;width:100%;}
+  #insight-contact-proto .ia-booking .ia-status{color:#e0edf5;background:#22445f;}
+  #insight-contact-proto .ia-compact .ia-main{max-width:920px;padding-top:42px;}
+  #insight-contact-proto .ia-compact .ia-title{text-align:center;}
+  #insight-contact-proto .ia-compact h1{font-size:37px;}
+  #insight-contact-proto .ia-compact .ia-lead{margin:auto;max-width:540px;}
+  #insight-contact-proto .ia-panel{max-width:650px;margin:28px auto 0;padding:28px 32px;background:#fff;border:1px solid var(--ia-line);border-radius:14px;box-shadow:0 8px 26px #143d5510;}
+  #insight-contact-proto .ia-segments{display:flex;gap:4px;background:#edf2f6;padding:4px;border-radius:8px;margin-bottom:24px;}
+  #insight-contact-proto .ia-segment{flex:1;min-height:44px;padding:10px 12px;border:0;background:transparent;border-radius:6px;color:#597080;font:inherit;font-size:13px;}
+  #insight-contact-proto .ia-segment[aria-pressed="true"]{background:#fff;color:#0b6a9c;box-shadow:0 1px 4px #16384c15;}
+  #insight-contact-proto .ia-secondary{background:#f4f8fb;padding:22px;border-radius:8px;}
+  #insight-contact-proto .ia-secondary p{font-size:14px;line-height:1.7;color:#5d7181;margin:10px 0 20px;}
+  #insight-contact-proto .ia-secondary h2{font-size:21px;margin:0;}
+  #insight-contact-proto .ia-compact-contact{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;font-size:12px;color:#5d7181;margin-top:24px;}
+  #insight-contact-proto [hidden]{display:none!important;}
+  @media(max-width:700px){
+    #insight-contact-proto .ia-nav{padding:16px 20px;}
+    #insight-contact-proto .ia-navlinks span:not(.ia-current){display:none;}
+    #insight-contact-proto .ia-brand{font-size:21px;}
+    #insight-contact-proto .ia-main,#insight-contact-proto .ia-compact .ia-main{padding:30px 22px 24px;}
+    #insight-contact-proto h1,#insight-contact-proto .ia-compact h1{font-size:32px;}
+    #insight-contact-proto .ia-layout{grid-template-columns:1fr;gap:30px;margin-top:26px;}
+    #insight-contact-proto .ia-advice{padding:24px;}
+    #insight-contact-proto .ia-fields{grid-template-columns:1fr;}
+    #insight-contact-proto input,#insight-contact-proto textarea,#insight-contact-proto select{font-size:16px;}
+    #insight-contact-proto .ia-submit{width:100%;}
+    #insight-contact-proto .ia-panel{padding:20px 16px;}
+    #insight-contact-proto .ia-footer{flex-direction:column;gap:5px;}
+  }
+
+html,body{margin:0;padding:0;background:#fff;color:#15314a;overflow-x:hidden;}
+#insight-contact-proto .ia-page{min-height:0;}
+#insight-contact-proto .ia-main{padding-top:32px;}
+#insight-contact-proto a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere;}
+#insight-contact-proto .ia-contactline a{text-decoration:none;}
+#insight-contact-proto .ia-contactline a:hover{text-decoration:underline;}
+#insight-contact-proto button{cursor:pointer;}
+#insight-contact-proto button:disabled{cursor:wait;opacity:.7;}
+#insight-contact-proto .ia-captcha{margin-top:20px;min-height:144px;}
+#insight-contact-proto .ia-processing{font-size:11px;line-height:1.6;color:#627685;margin-top:10px;}
+#insight-contact-proto .ia-status[data-state="error"]{background:#fff1ef;color:#8e3026;}
+#insight-contact-proto .ia-status[data-state="success"]{background:#eaf5ef;color:#23603f;}
+@media(max-width:700px){#insight-contact-proto .ia-main{padding:24px 18px;}#insight-contact-proto .ia-advice{padding:22px;}#insight-contact-proto .ia-advice h2 br{display:none;}#insight-contact-proto .ia-services{margin:16px 0 20px;}}
+</style></head><body><div id="insight-contact-proto">
+    <div class="ia-page">
+      
+      <main class="ia-main">
+        <div class="ia-eyebrow">CONVERSEMOS SOBRE TU PROYECTO</div>
+        <h1>De tus datos a tu<br>próxima decisión.</h1>
+        <p class="ia-lead">Cuéntame qué necesitas entender, mejorar o anticipar en tu negocio. Definamos juntos el siguiente paso.</p>
+        <div class="ia-layout">
+          <aside class="ia-advice">
+            <svg class="ia-small-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11a7 7 0 0 1-7 7H7l-4 3V7a4 4 0 0 1 4-4h7a7 7 0 0 1 7 8Z"/><path d="M7 8h9M7 12h6"/></svg>
+            <h2>Todo empieza con<br>una buena pregunta.</h2>
+            <p>Ya sea un primer dashboard o una nueva forma de analizar tu operación, conversemos sobre lo que necesitas resolver.</p>
+            <div class="ia-services"><span>Dashboards</span><span>Automatización</span><span>Analítica y pronósticos</span></div>
+            <div class="ia-contactline"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><a href="mailto:maramirez@eada.net">maramirez@eada.net</a></div>
+            <div class="ia-contactline"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1c0 9 8 17 17 17a1 1 0 0 0 1-1v-4l-5-2-2 2a15 15 0 0 1-6-6l2-2-2-5Z"/></svg><a href="tel:+51995238037">+51 995 238 037</a></div>
+            <hr>
+            <button class="ia-appointment cursor-interaction" type="button" aria-controls="ia-preference"><span><strong>¿Prefieres una reunión?</strong><small>Coordinemos un horario.</small></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></button>
+            
+          </aside>
+          <form class="ia-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="c20f99ef-9434-4ca6-bdc0-4ba2791793d8">
+            <input type="hidden" name="subject" value="Nueva consulta · Insight Analytics">
+            <input type="hidden" name="from_name" value="Insight Analytics · Contacto">
+            <h2>¿En qué puedo ayudarte?</h2>
+            <p class="ia-helper">Los campos con * son obligatorios.</p>
+            <div class="ia-fields">
+              <div class="ia-field"><label for="ia-name">Nombre *</label><input id="ia-name" name="name" maxlength="120" placeholder="Tu nombre" required autocomplete="name"></div>
+              <div class="ia-field"><label for="ia-company">Empresa <span class="ia-optional">(opcional)</span></label><input id="ia-company" name="company" maxlength="160" placeholder="Nombre de tu empresa" autocomplete="organization"></div>
+              <div class="ia-field"><label for="ia-email">Correo *</label><input id="ia-email" name="email" maxlength="254" type="email" placeholder="tu@empresa.com" required autocomplete="email"></div>
+              <div class="ia-field"><label for="ia-phone">Teléfono <span class="ia-optional">(opcional)</span></label><input id="ia-phone" name="phone" maxlength="40" type="tel" placeholder="Incluye el código de país" autocomplete="tel"></div>
+              <div class="ia-field ia-full"><label for="ia-service">¿Qué necesitas? *</label><select id="ia-service" name="service" required><option value="">Selecciona una opción</option><option>Crear o mejorar un dashboard</option><option>Automatizar reportes</option><option>Analizar datos y generar pronósticos</option><option>Orientación para mi proyecto</option><option>Coordinar una reunión</option></select></div>
+              <div class="ia-field ia-full" id="ia-preference" hidden><label for="ia-preferred-time">Horario preferido *</label><input id="ia-preferred-time" name="preferred_time" placeholder="Día, hora y zona horaria" maxlength="180" disabled><span class="ia-helper">Coordinaremos el horario por correo; esta solicitud no reserva una cita.</span></div>
+              <div class="ia-field ia-full"><label for="ia-message">Cuéntame sobre tu proyecto *</label><textarea id="ia-message" name="message" maxlength="4000" placeholder="¿Qué reto quieres resolver y cómo lo gestionas hoy?" required></textarea></div>
+            </div>
+            <div class="ia-captcha"><div class="h-captcha" data-captcha="true" data-lang="es" data-size="compact"></div></div>
+            <button class="ia-submit cursor-interaction" id="contact-submit" type="submit">Conversemos <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+            <p class="ia-privacy"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg><span>Comparte solo información general. No incluyas datos confidenciales.</span></p>
+            <div class="ia-status" id="contact-status" role="status" aria-live="polite" hidden></div>
+            <noscript><p class="ia-status">Activa JavaScript para enviar el formulario o escribe a <a href="mailto:maramirez@eada.net">maramirez@eada.net</a>.</p></noscript>
+            <p class="ia-processing">Usaremos tus datos para responder tu consulta. El envío se procesa mediante <a href="https://web3forms.com/privacy" target="_blank" rel="noopener noreferrer">Web3Forms</a>.</p>
+          </form>
+        </div>
+        <footer class="ia-footer"><span>Insight Analytics · Decisiones con claridad.</span><span>Lima, Perú · Atención en línea</span></footer>
+      </main>
+    </div>
+  </div><script>(() => {
+  'use strict';
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('contact-status');
+  const submit = document.getElementById('contact-submit');
+  const service = document.getElementById('ia-service');
+  const preference = document.getElementById('ia-preference');
+  const preferredTime = document.getElementById('ia-preferred-time');
+  const meetingButton = document.querySelector('.ia-appointment');
+  const originalButton = submit.innerHTML;
+  let sending = false;
+
+  function syncMeeting() {
+    const meeting = service.value === 'Coordinar una reunión';
+    preference.hidden = !meeting;
+    preferredTime.disabled = !meeting;
+    preferredTime.required = meeting;
+  }
+  function showStatus(message, state) {
+    status.hidden = false;
+    status.dataset.state = state;
+    status.textContent = message;
+  }
+  service.addEventListener('change', syncMeeting);
+  meetingButton.addEventListener('click', () => {
+    service.value = 'Coordinar una reunión';
+    syncMeeting();
+    preference.scrollIntoView({ block: 'center', behavior: 'auto' });
+    preferredTime.focus({ preventScroll: true });
+  });
+  syncMeeting();
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (sending || !form.reportValidity()) return;
+    const token = form.querySelector('[name="h-captcha-response"]');
+    if (!token || !token.value.trim()) {
+      showStatus('Completa la verificación de seguridad antes de enviar. Si no aparece, recarga la página o escribe a maramirez@eada.net.', 'error');
+      return;
+    }
+    const payload = Object.fromEntries(new FormData(form));
+    sending = true;
+    submit.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    submit.textContent = 'Enviando…';
+    showStatus('Estamos enviando tu consulta…', 'pending');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+        credentials: 'omit'
+      });
+      let result;
+      try { result = await response.json(); }
+      catch { throw new Error('uncertain'); }
+      if (!response.ok || result.success !== true) {
+        showStatus('El servicio no confirmó el envío. Tus datos siguen aquí. Revisa la verificación e inténtalo nuevamente, o escribe a maramirez@eada.net.', 'error');
+        return;
+      }
+      form.reset();
+      syncMeeting();
+      showStatus('Gracias por escribir. Tu consulta fue enviada; te responderé al correo que indicaste.', 'success');
+    } catch {
+      showStatus('No pudimos confirmar el envío por un problema de conexión. Conservamos tu mensaje. Antes de reenviarlo, considera que pudo haberse recibido. También puedes escribir a maramirez@eada.net.', 'error');
+    } finally {
+      clearTimeout(timeout);
+      sending = false;
+      submit.disabled = false;
+      form.removeAttribute('aria-busy');
+      submit.innerHTML = originalButton;
+      if (window.hcaptcha && typeof window.hcaptcha.reset === 'function') window.hcaptcha.reset();
+    }
+  });
+})();
+</script><script src="https://web3forms.com/client/script.js" async defer></script></body></html>
