@@ -95,3 +95,26 @@
     }
   });
 })();
+
+// La URL transporta solo el ID público del caso, nunca datos del visitante.
+(() => {
+  const form=document.getElementById('contact-form');
+  const source=document.getElementById('contact-case-data');
+  if(!form||!source)return;
+  const value=new URLSearchParams(window.location.search).get('caso');
+  if(!value||!/^\d{1,2}$/.test(value))return;
+  const item=JSON.parse(source.textContent).find(entry=>entry.id===Number(value));
+  if(!item)return;
+  const message=document.getElementById('ia-message');
+  const banner=document.getElementById('contact-reference');
+  const reference=document.getElementById('reference-case');
+  if(message.value.trim())return;
+  message.value=`Hola, me interesa una solución similar a «${item.title}» (${item.category}).\n\nEn mi organización, el reto que necesito resolver es:\n`;
+  reference.value=`${item.id} · ${item.title}`;
+  document.getElementById('contact-reference-title').textContent=item.title;
+  banner.hidden=false;
+  const service=document.getElementById('ia-service');
+  service.value=item.id===22?'Analizar datos y generar pronósticos':'Crear o mejorar un dashboard';
+  service.dispatchEvent(new Event('change',{bubbles:true}));
+  form.addEventListener('reset',()=>{banner.hidden=true;});
+})();
