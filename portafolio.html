@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Analytics | Casos de estudio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #2f2f2f;
+            --card-bg: #ffffff;
+            --muted: #6b6b6b;
+            --overlay: rgba(0,0,0,0.6);
+            --radius: 12px;
+            --transition: 0.22s;
+            --shadow: 0 6px 20px rgba(18,18,18,0.08);
+            --primary-blue: #0b5394;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body, .dashboard-embed {
+            font-family: 'Roboto', sans-serif;
+            color: #222;
+            background-color: #f8f9fa;
+            width: 100%;
+            overflow-x: hidden;
+			height: auto; /* Añade esto */
+			min-height: auto; /* Añade esto */			
+        }
+        
+        /* Contenedor principal optimizado */
+        .dashboard-embed {
+            padding: 20px;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            min-height: auto; /* Cambia de 100vh a auto */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Título responsive */
+        .dashboard-title {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        
+        .dashboard-title h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin: 0;
+            color: var(--accent);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .dashboard-title .underline {
+            display: block;
+            margin: 8px auto 0;
+            height: 3px;
+            width: min(140px, 30vw);
+            background: linear-gradient(90deg, rgba(47,47,47,0.85), rgba(100,100,100,0.3));
+            border-radius: 6px;
+        }
+        
+        /* Barra de filtros optimizada */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0 26px;
+            padding: 0 10px;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            color: var(--primary-blue);
+            border-radius: 10px;
+            border: 2px solid var(--primary-blue);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: clamp(0.75rem, 2vw, 0.875rem);
+            box-shadow: none;
+            transition: transform var(--transition), box-shadow var(--transition);
+            flex: 0 1 auto;
+            min-width: 0;
+        }
+        
+        .filter-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--primary-blue);
+            fill: none;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary-blue);
+            color: white;
+            outline: 3px solid rgba(255,255,255,0.06);
+            box-shadow: 0 10px 30px rgba(47,47,47,0.12);
+        }
+        
+        .filter-btn.active svg {
+            stroke: white;
+        }
+        
+        /* Grid de tarjetas completamente responsive */
+        .cards-container {
+			/* Establece el contenedor como grid para layout de cuadrícula */
+            display: grid;
+			/* Define columnas responsivas que se ajustan automáticamente:
+			   - auto-fill: crea tantas columnas como quepan en el espacio
+			   - minmax(300px, 1fr): cada columna tiene mínimo 300px y máximo 1 fracción del espacio */			
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			/* Espacio entre los elementos grid (filas y columnas) */
+            gap: 18px;
+			/* Ocupa el 100% del ancho del contenedor padre */
+            width: 100%;
+			/* Padding lateral izquierdo y derecho de 10px */
+            padding: 0 10px;
+			/* Altura mínima automática - se ajusta al contenido */
+			min-height: 50%; /* Asegura altura automática */
+			/* Altura automática - el contenedor crece según su contenido */
+			height: 50%; /* Elimina cualquier altura fija */			
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+            transition: transform var(--transition), box-shadow var(--transition);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            height: auto; /* Cambia de 100% a auto */
+        }
+        
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 36px rgba(17,17,17,0.12);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .card-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .card h3 {
+            margin: 0;
+            font-size: 16px;
+            color: var(--accent);
+            line-height: 1.3;
+        }
+        
+        .card .category {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        
+        .card .desc {
+            font-size: 13px;
+            color: #444;
+            flex: 1;
+            line-height: 1.4;
+        }
+        
+        .card .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        
+        .case-btn {
+            background: transparent;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background var(--transition), color var(--transition), transform var(--transition);
+        }
+        
+        .case-btn:hover {
+            background: var(--primary-blue);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        /* Oculto por filtro */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Modal optimizado para pantallas pequeñas */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            display: none;
+            align-items: flex-start;   /* antes fue: center, ahora SUBE EL MODAL */
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;   
+            padding-top: 24px;
+        }
+        
+        .modal {
+            width: 90%;
+            max-width: 900px;
+            height: auto;
+            max-height: 90vh;
+            background: #fff;
+            border-radius: 12px;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 18px;
+        }
+        
+        .modal .media {
+            flex: 1;
+            min-height: 200px;
+        }
+        
+        .modal .media img {
+            width: 100%;
+            height: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f2f2f2;
+        }
+        
+        .modal .info {
+            flex: 1;
+            padding: 6px 4px;
+            color: #222;
+        }
+        
+        .modal .info h2 {
+            margin: 0 0 6px 0;
+            color: var(--accent);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+        
+        .modal .info .meta {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .modal .info #modalDesc {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.45;
+        }
+        
+        /* Botón cerrar modal */
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #333;
+            padding: 6px;
+            border-radius: 8px;
+            z-index: 10;
+        }
+        
+        .modal-close:hover {
+            background: #f2f2f2;
+        }
+        
+        /* Media queries optimizadas */
+        @media (min-width: 768px) {
+            .dashboard-embed {
+                padding: 28px;
+            }
+            
+            .filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 9px 12px;
+                font-size: 14px;
+            }
+            
+            .modal {
+                flex-direction: row;
+                height: auto;
+            }
+            
+            .modal .media {
+                height: auto;
+            }
+            
+            .modal .media img {
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .filters {
+                gap: 6px;
+            }
+            
+            .filter-btn {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+            
+            .filter-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .modal {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .dashboard-embed {
+                padding: 15px 10px;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                gap: 4px;
+            }
+        }
+
+        /* Modal de altura natural: estable en página propia y en iframe. */
+        .modal-overlay {
+            align-items: flex-start;
+            padding: 24px 16px;
+            overflow: hidden;
+        }
+        .modal {
+            width: min(100%, 1000px);
+            max-width: 1000px;
+            height: auto;
+            max-height: min(680px, calc(100vh - 48px));
+            max-height: min(680px, calc(100dvh - 48px));
+            padding: 24px;
+            gap: 24px;
+            align-items: flex-start;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+        .modal .media, .modal .info {
+            flex: 1 1 0;
+            width: 100%;
+            min-width: 0;
+            min-height: 0;
+            height: auto;
+        }
+        .modal .media img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 360px;
+            object-fit: contain;
+            background: transparent;
+        }
+        .modal .info { padding: 0 18px 0 0; }
+        .modal-close {
+            top: 6px;
+            right: 6px;
+            background: #fff;
+            line-height: 1;
+            width: 34px;
+            height: 34px;
+        }
+        @media (max-width: 767px) {
+            .modal-overlay { padding: 12px; }
+            .modal {
+                width: 100%;
+                padding: 40px 16px 20px;
+                gap: 16px;
+                max-height: calc(100vh - 24px);
+                max-height: calc(100dvh - 24px);
+            }
+            .modal .media, .modal .info { flex: 0 0 auto; }
+            .modal .media img { max-height: 260px; }
+            .modal .info { padding: 0; }
+        }
+
+        /* Cierre aprobado: cabecera opaca siempre fuera de la fotografía. */
+        .modal {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0;
+            gap: 0;
+            overflow: hidden;
+        }
+        .modal-header {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            min-height: 56px;
+            padding: 6px 8px 6px 20px;
+            background: #fff;
+            color: #66717b;
+        }
+        .modal-eyebrow { font-size: 12px; line-height: 1.4; }
+        .modal .modal-close {
+            position: static;
+            flex: 0 0 44px;
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            padding: 4px;
+            border: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: #36434e;
+            transform: none;
+        }
+        .modal-close-disc {
+            display: grid;
+            place-items: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #d5dce1;
+            border-radius: 50%;
+            background: #f3f5f6;
+            box-shadow: 0 1px 2px #18304512;
+        }
+        .modal-close:hover .modal-close-disc { background: #e6ebef; }
+        .modal-close:focus-visible {
+            outline: 2px solid #0b5394;
+            outline-offset: -2px;
+        }
+        .modal-body {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            min-height: 0;
+            padding: 0 24px 24px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+        .modal .info { padding: 0; }
+        @media (max-width: 767px) {
+            .modal-header { padding-left: 16px; }
+            .modal-body { flex-direction: column; gap: 16px; padding: 0 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-embed" id="dashboard-embed">
+        <div class="filters" id="filters">
+            <!-- Botones con iconos lineales simples -->
+            <button class="filter-btn active" data-filter="all" title="Todos">
+                <!-- icono cuadrícula -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+                Todos
+            </button>
+
+            <button class="filter-btn" data-filter="Minería" title="Minería">
+                <!-- pico -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M3 21l7-7"/><path d="M7 7l10 10"/><path d="M14 3l7 7"/></svg>
+                Minería
+            </button>
+
+            <button class="filter-btn" data-filter="Banca" title="Banca">
+                <!-- Ícono de edificio bancario -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20">
+                    <path d="M3 10h18L12 3 3 10z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 10v10h16V10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 20h20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Banca
+            </button>
+
+            <button class="filter-btn" data-filter="Salud" title="Salud">
+                <!-- cruz -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                Salud
+            </button>
+
+            <button class="filter-btn" data-filter="Educación" title="Educación">
+                <!-- birrete -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M12 2l9 4-9 4-9-4 9-4z"/><path d="M12 10v10"/></svg>
+                Educación
+            </button>
+
+            <button class="filter-btn" data-filter="Tecnología" title="Tecnología">
+                <!-- engranaje -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.8 1.8 0 0 0 .3 1.9l.1.1a1 1 0 0 1-1.4 1.4l-.1-.1a1.8 1.8 0 0 0-1.9-.3 1.8 1.8 0 0 0-1 1.6V21a1 1 0 0 1-2 0v-.2a1.8 1.8 0 0 0-1-1.6 1.8 1.8 0 0 0-1.9.3l-.1.1A1 1 0 0 1 6.3 18l.1-.1a1.8 1.8 0 0 0-.3-1.9 1.8 1.8 0 0 0-1.6-1H3a1 1 0 0 1 0-2h.2a1.8 1.8 0 0 0 1.6-1 1.8 1.8 0 0 0 .3-1.9L5 7.7A1 1 0 0 1 6.4 6.3l.1.1a1.8 1.8 0 0 0 1.9.3h.1a1.8 1.8 0 0 0 1-1.6V5a1 1 0 0 1 2 0v.2a1.8 1.8 0 0 0 1 1.6 1.8 1.8 0 0 0 1.9-.3l.1-.1A1 1 0 0 1 17.7 6.3l-.1.1a1.8 1.8 0 0 0 .3 1.9 1.8 1.8 0 0 0 1.6 1H21a1 1 0 0 1 0 2h-.2a1.8 1.8 0 0 0-1.6 1z"/></svg>
+                Tecnología
+            </button>
+
+            <button class="filter-btn" data-filter="Construcción" title="Construcción">
+                <!-- casco -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M3 12s2-6 9-6 9 6 9 6v6H3v-6z"/><path d="M12 6v6"/></svg>
+                Construcción
+            </button>
+
+            <button class="filter-btn" data-filter="Gobierno" title="Gobierno">
+                <!-- edificio -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M9 10v2"/><path d="M15 10v2"/></svg>
+                Gobierno
+            </button>
+            <button class="filter-btn" data-filter="Seguros" title="Seguros"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3z"/><path d="M8 12l3 3 5-6"/></svg>Seguros</button>
+        </div>
+
+        <p style="margin:0 10px 20px;color:#555">Imágenes generadas con IA: personas, entornos, tableros y cifras son ficticios. No representan instalaciones, datos ni resultados de clientes. Las descripciones presentan el alcance analítico de cada caso.</p>
+        <div class="cards-container" id="cards-container">
+            <!-- IDs originales conservados; 22 casos -->
+            <!-- 1 -->
+            <div class="card" data-category="Minería">
+                <img src="images/casos/caso-01.png" alt="Escena sintética ilustrativa: Producción y ciclos de operación minera" loading="lazy">
+                <div class="card-body"><h3>Producción y ciclos de operación minera</h3><div class="category">Minería</div>
+                <div class="desc">Compara producción y plan, tiempos de ciclo y utilización de flota para orientar la revisión de desvíos operativos.</div>
+                <div class="actions"><button class="case-btn" data-id="1">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 2 -->
+            <div class="card" data-category="Minería">
+                <img src="images/casos/caso-02.png" alt="Escena sintética ilustrativa: Telemetría y mantenimiento de equipos mineros" loading="lazy">
+                <div class="card-body"><h3>Telemetría y mantenimiento de equipos mineros</h3><div class="category">Minería</div>
+                <div class="desc">Reúne señales de equipos y registros de mantenimiento para explorar anomalías y priorizar revisiones técnicas.</div>
+                <div class="actions"><button class="case-btn" data-id="2">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 3 -->
+            <div class="card" data-category="Minería">
+                <img src="images/casos/caso-03.png" alt="Escena sintética ilustrativa: Seguridad e incidentes en operaciones mineras" loading="lazy">
+                <div class="card-body"><h3>Seguridad e incidentes en operaciones mineras</h3><div class="category">Minería</div>
+                <div class="desc">Organiza incidentes, controles e inspecciones por área y turno para dar seguimiento a acciones preventivas.</div>
+                <div class="actions"><button class="case-btn" data-id="3">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 4 -->
+            <div class="card" data-category="Banca">
+                <img src="images/casos/caso-16.png" alt="Escena sintética ilustrativa: Demanda y dotación en sucursales bancarias" loading="lazy">
+                <div class="card-body"><h3>Demanda y dotación en sucursales bancarias</h3><div class="category">Banca</div>
+                <div class="desc">Relaciona afluencia, tiempos de atención y capacidad para apoyar la planificación de turnos y dotaciones.</div>
+                <div class="actions"><button class="case-btn" data-id="16">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 5 -->
+            <div class="card" data-category="Banca">
+                <img src="images/casos/caso-17.png" alt="Escena sintética ilustrativa: Seguimiento de liquidez y asignación de capital" loading="lazy">
+                <div class="card-body"><h3>Seguimiento de liquidez y asignación de capital</h3><div class="category">Banca</div>
+                <div class="desc">Presenta posiciones, flujos proyectados y necesidades de fondeo para apoyar la revisión de escenarios financieros.</div>
+                <div class="actions"><button class="case-btn" data-id="17">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 6 -->
+            <div class="card" data-category="Banca">
+                <img src="images/casos/caso-18.png" alt="Escena sintética ilustrativa: Inversión y capacidad para transformación digital bancaria" loading="lazy">
+                <div class="card-body"><h3>Inversión y capacidad para transformación digital bancaria</h3><div class="category">Banca</div>
+                <div class="desc">Organiza iniciativas, presupuesto, plazos y capacidades para orientar la priorización del portafolio digital.</div>
+                <div class="actions"><button class="case-btn" data-id="18">Ver Caso de Estudio</button></div></div></div>
+            
+            <!-- 7 -->
+            <div class="card" data-category="Salud">
+                <img src="images/casos/caso-04.png" alt="Escena sintética ilustrativa: Gestión de atención por telemedicina" loading="lazy">
+                <div class="card-body"><h3>Gestión de atención por telemedicina</h3><div class="category">Salud</div>
+                <div class="desc">Analiza demanda, agendas y tiempos de atención remota para apoyar la coordinación del servicio.</div>
+                <div class="actions"><button class="case-btn" data-id="4">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 8 -->
+            <div class="card" data-category="Salud">
+                <img src="images/casos/caso-05.png" alt="Escena sintética ilustrativa: Seguimiento de atención a pacientes crónicos" loading="lazy">
+                <div class="card-body"><h3>Seguimiento de atención a pacientes crónicos</h3><div class="category">Salud</div>
+                <div class="desc">Presenta controles, adherencia y evolución de indicadores para apoyar el seguimiento del equipo asistencial.</div>
+                <div class="actions"><button class="case-btn" data-id="5">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 9 -->
+            <div class="card" data-category="Salud">
+                <img src="images/casos/caso-06.png" alt="Escena sintética ilustrativa: Flujo de pacientes y capacidad hospitalaria" loading="lazy">
+                <div class="card-body"><h3>Flujo de pacientes y capacidad hospitalaria</h3><div class="category">Salud</div>
+                <div class="desc">Integra esperas, ocupación y procesos de admisión y alta para identificar puntos de congestión.</div>
+                <div class="actions"><button class="case-btn" data-id="6">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 10 -->
+            <div class="card" data-category="Educación">
+                <img src="images/casos/caso-07.png" alt="Escena sintética ilustrativa: Participación y avance en educación virtual" loading="lazy">
+                <div class="card-body"><h3>Participación y avance en educación virtual</h3><div class="category">Educación</div>
+                <div class="desc">Relaciona progreso, asistencia y entregas para orientar el acompañamiento en cursos virtuales.</div>
+                <div class="actions"><button class="case-btn" data-id="7">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 11 -->
+            <div class="card" data-category="Educación">
+                <img src="images/casos/caso-08.png" alt="Escena sintética ilustrativa: Rendimiento académico y acompañamiento estudiantil" loading="lazy">
+                <div class="card-body"><h3>Rendimiento académico y acompañamiento estudiantil</h3><div class="category">Educación</div>
+                <div class="desc">Reúne evaluaciones, asistencia y entregas para identificar necesidades de apoyo y revisar intervenciones.</div>
+                <div class="actions"><button class="case-btn" data-id="8">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 12 -->
+            <div class="card" data-category="Educación">
+                <img src="images/casos/caso-09.png" alt="Escena sintética ilustrativa: Mantenimiento de infraestructura educativa" loading="lazy">
+                <div class="card-body"><h3>Mantenimiento de infraestructura educativa</h3><div class="category">Educación</div>
+                <div class="desc">Consolida estado de instalaciones y solicitudes de mantenimiento para priorizar intervenciones y recursos.</div>
+                <div class="actions"><button class="case-btn" data-id="9">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 13 -->
+            <div class="card" data-category="Tecnología">
+                <img src="images/casos/caso-10.png" alt="Escena sintética ilustrativa: Monitoreo de sensores industriales" loading="lazy">
+                <div class="card-body"><h3>Monitoreo de sensores industriales</h3><div class="category">Tecnología</div>
+                <div class="desc">Visualiza señales de sensores, consumos y eventos para revisar desviaciones en la operación industrial.</div>
+                <div class="actions"><button class="case-btn" data-id="10">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 14 -->
+            <div class="card" data-category="Tecnología">
+                <img src="images/casos/caso-11.png" alt="Escena sintética ilustrativa: Eventos y respuesta de ciberseguridad" loading="lazy">
+                <div class="card-body"><h3>Eventos y respuesta de ciberseguridad</h3><div class="category">Tecnología</div>
+                <div class="desc">Consolida alertas, vulnerabilidades e incidentes para apoyar su priorización y seguimiento de respuesta.</div>
+                <div class="actions"><button class="case-btn" data-id="11">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 15 -->
+            <div class="card" data-category="Tecnología">
+                <img src="images/casos/caso-19.png" alt="Escena sintética ilustrativa: Entrega y calidad de software" loading="lazy">
+                <div class="card-body"><h3>Entrega y calidad de software</h3><div class="category">Tecnología</div>
+                <div class="desc">Relaciona tiempos de ciclo, defectos y despliegues para revisar cuellos de botella y calidad de las entregas.</div>
+                <div class="actions"><button class="case-btn" data-id="19">Ver Caso de Estudio</button></div></div></div>
+            
+            <!-- 16 -->
+            <div class="card" data-category="Construcción">
+                <img src="images/casos/caso-12.png" alt="Escena sintética ilustrativa: Avance y presupuesto de obras" loading="lazy">
+                <div class="card-body"><h3>Avance y presupuesto de obras</h3><div class="category">Construcción</div>
+                <div class="desc">Compara avance físico y programación junto con hitos y presupuesto para revisar desviaciones de ejecución.</div>
+                <div class="actions"><button class="case-btn" data-id="12">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 17 -->
+            <div class="card" data-category="Construcción">
+                <img src="images/casos/caso-13.png" alt="Escena sintética ilustrativa: Abastecimiento e inventario de materiales en obra" loading="lazy">
+                <div class="card-body"><h3>Abastecimiento e inventario de materiales en obra</h3><div class="category">Construcción</div>
+                <div class="desc">Relaciona existencias, consumos y entregas para coordinar el abastecimiento de los frentes de trabajo.</div>
+                <div class="actions"><button class="case-btn" data-id="13">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 18 -->
+            <div class="card" data-category="Construcción">
+                <img src="images/casos/caso-20.png" alt="Escena sintética ilustrativa: Inspecciones y acciones de seguridad en obra" loading="lazy">
+                <div class="card-body"><h3>Inspecciones y acciones de seguridad en obra</h3><div class="category">Construcción</div>
+                <div class="desc">Reúne inspecciones, hallazgos y acciones correctivas para dar seguimiento a la prevención en campo.</div>
+                <div class="actions"><button class="case-btn" data-id="20">Ver Caso de Estudio</button></div></div></div>
+            
+            <!-- 19 -->
+            <div class="card" data-category="Gobierno">
+                <img src="images/casos/caso-14.png" alt="Escena sintética ilustrativa: Presupuesto e inversión pública" loading="lazy">
+                <div class="card-body"><h3>Presupuesto e inversión pública</h3><div class="category">Gobierno</div>
+                <div class="desc">Presenta presupuesto, ejecución y avance de proyectos como apoyo a la consulta y rendición de cuentas.</div>
+                <div class="actions"><button class="case-btn" data-id="14">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 20 -->
+            <div class="card" data-category="Gobierno">
+                <img src="images/casos/caso-15.png" alt="Escena sintética ilustrativa: Tráfico y planificación de movilidad urbana" loading="lazy">
+                <div class="card-body"><h3>Tráfico y planificación de movilidad urbana</h3><div class="category">Gobierno</div>
+                <div class="desc">Reúne flujos, tiempos de viaje e incidentes para explorar necesidades de gestión de movilidad.</div>
+                <div class="actions"><button class="case-btn" data-id="15">Ver Caso de Estudio</button></div></div></div>
+
+            <!-- 21 -->
+            <div class="card" data-category="Gobierno">
+                <img src="images/casos/caso-21.png" alt="Escena sintética ilustrativa: Atención y resolución de trámites digitales" loading="lazy">
+                <div class="card-body"><h3>Atención y resolución de trámites digitales</h3><div class="category">Gobierno</div>
+                <div class="desc">Analiza solicitudes, tiempos y carga por dependencia para revisar el desempeño de la atención ciudadana.</div>
+                <div class="actions"><button class="case-btn" data-id="21">Ver Caso de Estudio</button></div></div></div>	
+<div class="card" data-category="Seguros">
+                <img src="images/casos/caso-22.png" alt="Escena sintética ilustrativa: Control y proyección presupuestaria de riesgos laborales" loading="lazy">
+                <div class="card-body"><h3>Control y proyección presupuestaria de riesgos laborales</h3><div class="category">Seguros</div>
+                <div class="desc">Integra ejecución presupuestaria, alertas, pronósticos y tendencias para anticipar desviaciones y apoyar la planificación de riesgos laborales en el sector seguros.</div>
+                <div class="actions"><button class="case-btn" data-id="22">Ver Caso de Estudio</button></div></div></div>
+        </div>
+    </div>
+
+    <!-- Modal markup (fuera del contenedor principal) -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-header">
+                <span class="modal-eyebrow">Caso de estudio · <span id="modalSector"></span></span>
+                <button type="button" class="modal-close" id="modalClose" aria-label="Cerrar caso de estudio">
+                    <span class="modal-close-disc" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <div class="media">
+                <img id="modalImage" src="" alt="Imagen ampliada"><p style="font-size:12px;color:#6b6b6b;margin-top:8px">Imagen sintética · Personas y cifras ficticias.</p>
+            </div>
+            <div class="info">
+                <h2 id="modalTitle"></h2>
+                <div class="meta" id="modalCategory"></div>
+                <div id="modalDesc"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+(function(){
+
+    /* --------------------------------------------------------
+       FUNCIÓN QUE CORRIGE EL PROBLEMA DE DOBLE SALTO DE LÍNEA
+       -------------------------------------------------------- */
+    function convertToHTML(text){
+        if(!text) return "";
+
+        // 1) Normalizar: quitar retornos de carro y colapsar saltos de línea en 1 espacio
+        text = text.replace(/\r/g, '').replace(/\n+/g, ' ').trim();
+
+        if(text.length === 0) return "";
+
+        let html = "";
+        const hasCheck = text.includes('✔');
+        const hasBullet = text.includes('•');
+
+        if(hasCheck){
+            const idx = text.indexOf('✔');
+            const before = text.slice(0, idx).trim();
+            const after = text.slice(idx).trim();
+
+            if(before) html += escapeHtml(before) + "<br>";
+
+            const firstBulletIdx = after.indexOf('•');
+
+            if(firstBulletIdx !== -1){
+                const header = after.slice(0, firstBulletIdx).replace(/^✔\s*/, '').trim();
+                if(header) html += `<b>✔ ${escapeHtml(header)}</b><br>`;
+
+                const bullets = after.slice(firstBulletIdx)
+                    .split('•')
+                    .map(s => s.trim())
+                    .filter(Boolean);
+
+                if(bullets.length){
+                    html += `<ul style="margin:0; padding-left:16px; list-style-type: disc;">` +
+                        bullets.map(b => `<li style="margin:0; padding:0;">${escapeHtml(b)}</li>`).join('') +
+                        `</ul>`;
+                }
+            } else {
+                const header = after.replace(/^✔\s*/, '').trim();
+                html += `<b>✔ ${escapeHtml(header)}</b>`;
+            }
+
+        } else if(hasBullet){
+
+            const firstBulletIdx = text.indexOf('•');
+            const before = text.slice(0, firstBulletIdx).trim();
+
+            if(before) html += escapeHtml(before) + "<br>";
+
+            const bullets = text.slice(firstBulletIdx)
+                .split('•')
+                .map(s => s.trim())
+                .filter(Boolean);
+
+               html += `<ul style="margin:0; padding-left:16px; list-style-type: disc;">` +
+                   bullets.map(b => `<li style="margin:0; padding:0;">${escapeHtml(b)}</li>`).join('') +
+                   `</ul>`;
+
+        } else {
+            html = escapeHtml(text);
+        }
+
+        return html;
+    }
+
+    // Evitar inyección HTML
+    function escapeHtml(str){
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+    }
+
+
+    /* --------------------------------------------------------
+       DATA ORIGINAL EXTENDED (SIN <br>, SIN SALTOS, SIN HTML)
+       -------------------------------------------------------- */
+    const extended = {
+        "1": "Alcance analítico: Compara producción y plan, tiempos de ciclo y utilización de flota para orientar la revisión de desvíos operativos. La visualización se centra en producción, ciclos y uso de equipos. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "2": "Alcance analítico: Reúne señales de equipos y registros de mantenimiento para explorar anomalías y priorizar revisiones técnicas. La visualización se centra en temperatura, vibración y eventos de mantenimiento. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "3": "Alcance analítico: Organiza incidentes, controles e inspecciones por área y turno para dar seguimiento a acciones preventivas. La visualización se centra en incidentes, controles y seguimiento preventivo. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "4": "Alcance analítico: Analiza demanda, agendas y tiempos de atención remota para apoyar la coordinación del servicio. La visualización se centra en demanda, disponibilidad y tiempos de consulta. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "5": "Alcance analítico: Presenta controles, adherencia y evolución de indicadores para apoyar el seguimiento del equipo asistencial. La visualización se centra en controles y continuidad de atención. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "6": "Alcance analítico: Integra esperas, ocupación y procesos de admisión y alta para identificar puntos de congestión. La visualización se centra en ocupación, esperas y flujo hospitalario. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "7": "Alcance analítico: Relaciona progreso, asistencia y entregas para orientar el acompañamiento en cursos virtuales. La visualización se centra en progreso y participación en cursos. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "8": "Alcance analítico: Reúne evaluaciones, asistencia y entregas para identificar necesidades de apoyo y revisar intervenciones. La visualización se centra en evaluaciones, asistencia y tutorías. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "9": "Alcance analítico: Consolida estado de instalaciones y solicitudes de mantenimiento para priorizar intervenciones y recursos. La visualización se centra en instalaciones y mantenimiento. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "10": "Alcance analítico: Visualiza señales de sensores, consumos y eventos para revisar desviaciones en la operación industrial. La visualización se centra en sensores, consumos y eventos. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "11": "Alcance analítico: Consolida alertas, vulnerabilidades e incidentes para apoyar su priorización y seguimiento de respuesta. La visualización se centra en alertas, vulnerabilidades e incidentes. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "12": "Alcance analítico: Compara avance físico y programación junto con hitos y presupuesto para revisar desviaciones de ejecución. La visualización se centra en avance, hitos y presupuesto. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "13": "Alcance analítico: Relaciona existencias, consumos y entregas para coordinar el abastecimiento de los frentes de trabajo. La visualización se centra en inventarios, consumos y entregas. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "14": "Alcance analítico: Presenta presupuesto, ejecución y avance de proyectos como apoyo a la consulta y rendición de cuentas. La visualización se centra en presupuesto y avance de inversión. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "15": "Alcance analítico: Reúne flujos, tiempos de viaje e incidentes para explorar necesidades de gestión de movilidad. La visualización se centra en tráfico, tiempos de viaje y rutas. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "16": "Alcance analítico: Relaciona afluencia, tiempos de atención y capacidad para apoyar la planificación de turnos y dotaciones. La visualización se centra en afluencia, atención y dotación. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "17": "Alcance analítico: Presenta posiciones, flujos proyectados y necesidades de fondeo para apoyar la revisión de escenarios financieros. La visualización se centra en flujos, fondeo y escenarios. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "18": "Alcance analítico: Organiza iniciativas, presupuesto, plazos y capacidades para orientar la priorización del portafolio digital. La visualización se centra en iniciativas, inversión y capacidad. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "19": "Alcance analítico: Relaciona tiempos de ciclo, defectos y despliegues para revisar cuellos de botella y calidad de las entregas. La visualización se centra en ciclos, defectos y despliegues. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "20": "Alcance analítico: Reúne inspecciones, hallazgos y acciones correctivas para dar seguimiento a la prevención en campo. La visualización se centra en inspecciones, hallazgos y acciones. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "21": "Alcance analítico: Analiza solicitudes, tiempos y carga por dependencia para revisar el desempeño de la atención ciudadana. La visualización se centra en solicitudes, tiempos y resolución. Su utilidad es apoyar la revisión y las decisiones del equipo responsable; no se presentan resultados medidos ni garantías de mejora.",
+        "22": "Alcance analítico: Integra presupuesto y ejecución con alertas de desviación, pronósticos y análisis de tendencias para apoyar la gestión del equipo de riesgos laborales en el sector seguros. La visualización permite reconocer cambios en el comportamiento presupuestario, anticipar escenarios de cierre y orientar la revisión de prioridades y recursos. Presenta una visión de gestión que facilita decisiones oportunas, sin exponer información interna ni detalles sensibles de la operación."
+};
+
+
+    /* --------------------------------------------------------
+       LÓGICA ORIGINAL DEL SISTEMA: FILTROS, CARDS, MODAL
+       -------------------------------------------------------- */
+
+    const container = document.getElementById('cards-container');
+    const filterBtns = document.querySelectorAll('#filters .filter-btn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalSector = document.getElementById('modalSector');
+    let modalOpener = null;
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalDesc = document.getElementById('modalDesc');
+
+    function setActiveButton(targetBtn){
+        filterBtns.forEach(b=> b.classList.remove('active'));
+        targetBtn.classList.add('active');
+    }
+    
+    function applyFilter(cat){
+        const cards = container.querySelectorAll('.card');
+        cards.forEach(card=>{
+            const c = card.getAttribute('data-category') || '';
+            if(cat === 'all' || c.toLowerCase() === cat.toLowerCase()){
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+
+    filterBtns.forEach(btn=>{
+        btn.addEventListener('click', function(){
+            const cat = this.getAttribute('data-filter') || 'all';
+            setActiveButton(this);
+            applyFilter(cat);
+        });
+    });
+
+    container.addEventListener('click', function(ev){
+        const target = ev.target;
+        if(target && target.classList.contains('case-btn')){
+            const card = target.closest('.card');
+            if(!card) return;
+
+            const id = target.getAttribute('data-id');
+            const title = card.querySelector('h3') ? card.querySelector('h3').innerText : '';
+            const category = card.querySelector('.category') ? card.querySelector('.category').innerText : '';
+            const img = card.querySelector('img') ? card.querySelector('img').src : '';
+
+            modalImage.src = img;
+            modalImage.alt = "Escena sintética ilustrativa: " + title;
+            modalTitle.textContent = title;
+            modalCategory.textContent = category;
+            modalSector.textContent = category;
+            modalOpener = target;
+
+            // AQUÍ SE APLICA EL NUEVO PROCESADOR
+            modalDesc.innerHTML = convertToHTML(extended[id]) ||
+                convertToHTML(card.querySelector('.desc') ? card.querySelector('.desc').innerText : '');
+
+            modalOverlay.style.display = 'flex';
+            modalOverlay.setAttribute('aria-hidden','false');
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+            document.querySelector('.modal-body').scrollTop = 0;
+            modalClose.focus({preventScroll:true});
+        }
+    });
+
+    function closeModal(){
+        modalOverlay.style.display = 'none';
+        modalOverlay.setAttribute('aria-hidden','true');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        modalImage.src = '';
+        if(modalOpener) modalOpener.focus({preventScroll:true});
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+    modalOverlay.addEventListener('click', function(e){
+        if(e.target === modalOverlay) closeModal();
+    });
+
+    const allBtn = document.querySelector('#filters .filter-btn[data-filter="all"]');
+    if(allBtn){ setActiveButton(allBtn); applyFilter('all'); }
+
+})();
+</script>
+
+
+</body>
+</html>
