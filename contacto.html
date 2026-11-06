@@ -89,6 +89,20 @@ html,body{margin:0;padding:0;background:#fff;color:#15314a;overflow-x:hidden;}
 #insight-contact-proto .ia-status[data-state="error"]{background:#fff1ef;color:#8e3026;}
 #insight-contact-proto .ia-status[data-state="success"]{background:#eaf5ef;color:#23603f;}
 @media(max-width:700px){#insight-contact-proto .ia-main{padding:24px 18px;}#insight-contact-proto .ia-advice{padding:22px;}#insight-contact-proto .ia-advice h2 br{display:none;}#insight-contact-proto .ia-services{margin:16px 0 20px;}}
+
+/* Confirmación discreta y legible, independiente del fondo del formulario. */
+#insight-contact-proto .ia-main{padding-bottom:14px;}
+#insight-contact-proto .ia-footer{margin-top:20px;padding-top:12px;}
+.ia-confirmation{position:fixed;inset:var(--confirmation-top,24px) 0 auto;margin:0 auto;width:min(380px,calc(100% - 32px));max-height:calc(100dvh - 32px);overflow-y:auto;padding:30px 26px 24px;border:0;border-radius:16px;background:#fff;color:#15314a;box-shadow:0 18px 60px #102f4838;font-family:Arial,Helvetica,sans-serif;text-align:center;box-sizing:border-box;}
+.ia-confirmation::backdrop{background:#10263766;}
+.ia-confirmation:not([open]){display:none;}
+.ia-confirmation .ia-confirm-check{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 16px;border-radius:50%;background:#e7f4ec;color:#17643d;}
+.ia-confirmation h2{font-size:23px;line-height:1.3;margin:0 0 10px;font-weight:600;}
+.ia-confirmation p{font-size:14px;line-height:1.65;color:#536c7e;margin:0;}
+.ia-confirmation .ia-confirm-dismiss{display:block;width:100%;min-height:44px;margin-top:24px;padding:12px 18px;border:0;border-radius:8px;background:#087cb7;color:#fff;font:600 14px Arial,Helvetica,sans-serif;cursor:pointer;}
+.ia-confirmation .ia-confirm-x{position:absolute;right:8px;top:8px;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#526778;cursor:pointer;}
+.ia-confirmation .ia-confirm-x:hover{background:#f1f5f7;}
+.ia-confirmation button:focus-visible{outline:2px solid #0b5394;outline-offset:3px;}
 </style></head><body><div id="insight-contact-proto">
     <div class="ia-page">
       
@@ -134,7 +148,16 @@ html,body{margin:0;padding:0;background:#fff;color:#15314a;overflow-x:hidden;}
         <footer class="ia-footer"><span>Insight Analytics · Decisiones con claridad.</span><span>Lima, Perú · Atención en línea</span></footer>
       </main>
     </div>
-  </div><script>(() => {
+  </div>
+<dialog class="ia-confirmation" id="contact-confirmation" aria-labelledby="confirmation-title" aria-describedby="confirmation-description">
+  <button type="button" class="ia-confirm-x" aria-label="Cerrar confirmación"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  <span class="ia-confirm-check" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></span>
+  <h2 id="confirmation-title">Mensaje enviado</h2>
+  <p id="confirmation-description">Gracias por escribir.<br>Te responderé al correo que indicaste.</p>
+  <button type="button" class="ia-confirm-dismiss" autofocus>Entendido</button>
+</dialog>
+<script>
+(() => {
   'use strict';
   const form = document.getElementById('contact-form');
   const status = document.getElementById('contact-status');
@@ -145,6 +168,43 @@ html,body{margin:0;padding:0;background:#fff;color:#15314a;overflow-x:hidden;}
   const meetingButton = document.querySelector('.ia-appointment');
   const originalButton = submit.innerHTML;
   let sending = false;
+  const confirmation = document.getElementById('contact-confirmation');
+  const dismiss = confirmation.querySelector('.ia-confirm-dismiss');
+  const close = confirmation.querySelector('.ia-confirm-x');
+  const closeConfirmation = () => confirmation.close();
+  dismiss.addEventListener('click', closeConfirmation);
+  close.addEventListener('click', closeConfirmation);
+  confirmation.addEventListener('close', () => submit.focus({preventScroll:true}));
+
+  function confirmSuccess() {
+    if (typeof confirmation.showModal !== 'function') {
+      showStatus('Mensaje enviado. Te responderé al correo que indicaste.', 'success');
+      return;
+    }
+    status.hidden = true;
+    confirmation.showModal();
+    // Colocar la confirmación cerca del botón usado, incluso dentro de un iframe alto.
+    const height = confirmation.getBoundingClientRect().height;
+    const anchor = submit.getBoundingClientRect().top;
+    const available = window.innerHeight;
+    const top = Math.max(16, Math.min(available - height - 16, anchor - height / 2));
+    confirmation.style.setProperty('--confirmation-top', top + 'px');
+    dismiss.focus({preventScroll:true});
+  }
+
+  // Comunicar solo la altura al marco propio; nunca datos del formulario.
+  const content = document.getElementById('insight-contact-proto');
+  let previousHeight = 0;
+  function reportHeight() {
+    if (window.parent === window) return;
+    const height = Math.ceil(content.getBoundingClientRect().height) + 2;
+    if (height === previousHeight) return;
+    previousHeight = height;
+    window.parent.postMessage({type:'insight-contact-height', height}, '*');
+  }
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(reportHeight).observe(content);
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
 
   function syncMeeting() {
     const meeting = service.value === 'Coordinar una reunión';
@@ -199,7 +259,7 @@ html,body{margin:0;padding:0;background:#fff;color:#15314a;overflow-x:hidden;}
       }
       form.reset();
       syncMeeting();
-      showStatus('Gracias por escribir. Tu consulta fue enviada; te responderé al correo que indicaste.', 'success');
+      confirmSuccess();
     } catch {
       showStatus('No pudimos confirmar el envío por un problema de conexión. Conservamos tu mensaje. Antes de reenviarlo, considera que pudo haberse recibido. También puedes escribir a maramirez@eada.net.', 'error');
     } finally {
