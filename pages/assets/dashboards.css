@@ -1,4 +1,4 @@
-#ia-site-prototype .dashboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:32px}
+#ia-site-prototype .dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:32px;min-width:0}
 #ia-site-prototype .dashboard-cover{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-between;min-height:300px;aspect-ratio:16/10;padding:27px 30px;border-radius:8px;overflow:hidden;background:linear-gradient(125deg,var(--cover-start),var(--cover-middle) 65%,var(--cover-end));box-shadow:0 4px 18px #102c5115;color:#fff}
 #ia-site-prototype .dashboard-cover:before,#ia-site-prototype .dashboard-cover:after{content:'';position:absolute;right:-70px;top:-110px;width:260px;height:260px;border:1px solid #ffffff20;border-radius:50%;pointer-events:none;z-index:-1}
 #ia-site-prototype .dashboard-cover:after{right:-35px;top:-75px;width:190px;height:190px;border-color:#ffffff14}
@@ -21,5 +21,38 @@
 .pbi-toolbar{display:flex;align-items:center;gap:15px;flex-shrink:0}.pbi-external{font-size:12px;color:#087cb7;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .pbi-holder{flex:1;min-height:0;position:relative;background:#f2f5f7}.pbi-holder iframe{display:block;width:100%;height:100%;border:0}
 .pbi-help{flex:0 0 auto;margin:0;padding:9px 22px;font-size:11px;line-height:1.6;background:#fff;color:#5d7181;border-top:1px solid #e2e9ed}
-@media(max-width:700px){#ia-site-prototype .dashboard-grid{grid-template-columns:1fr;gap:22px}#ia-site-prototype .dashboard-cover{min-height:275px;padding:24px;aspect-ratio:16/11}#ia-site-prototype .dashboard-cover h2{font-size:24px}.pbi-dialog{width:calc(100% - 16px);height:calc(100dvh - 16px);max-height:calc(100dvh - 16px)}.pbi-header{padding:8px 8px 8px 14px;gap:10px}.pbi-header h2{font-size:13px}.pbi-toolbar{gap:9px}.pbi-external{font-size:10px;max-width:75px}.pbi-help{font-size:10px;padding:9px 14px}}
+#ia-site-prototype .dashboard-cover{width:100%;min-width:0;box-sizing:border-box}
+#ia-site-prototype .dashboard-cover-heading{width:100%;min-width:0;max-width:100%;overflow-wrap:anywhere}
+#ia-site-prototype .dashboard-cover-actions{min-width:0;flex-wrap:wrap}
+#ia-site-prototype .dashboard-open{max-width:100%;box-sizing:border-box;text-align:center}
+/* El estilo editorial general de h2 no debe agrandar la cabecera del visor. */
+#ia-site-prototype .pbi-header h2{font:600 16px/1.4 Arial,Helvetica,sans-serif;letter-spacing:0;margin:0;min-width:0;overflow-wrap:anywhere}
+#ia-site-prototype .pbi-header .pbi-external{font-size:12px;line-height:1.5}
+@media(max-width:700px){
+ #ia-site-prototype .dashboard-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+ #ia-site-prototype .dashboard-cover{min-height:245px;height:auto;padding:22px;aspect-ratio:auto}
+ #ia-site-prototype .dashboard-cover h2{font-size:22px;line-height:1.3;overflow-wrap:anywhere}
+ #ia-site-prototype .dashboard-cover-top span{font-size:9px;letter-spacing:1.5px}
+ #ia-site-prototype .dashboard-cover-top svg{flex:0 0 25px;width:25px;height:25px}
+ #ia-site-prototype .dashboard-cover-label{font-size:9px;letter-spacing:.9px}
+ .pbi-dialog{width:calc(100% - 28px);height:auto;max-height:calc(100vh - 48px);max-height:calc(100svh - 48px);border-radius:12px;overflow-y:auto;overscroll-behavior:contain}
+ .pbi-header{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:6px 10px;padding:12px 12px 8px 16px;min-height:0;position:sticky;top:0;z-index:2;background:#fff}
+ #ia-site-prototype .pbi-header h2{grid-column:1;grid-row:1;font-size:15px;line-height:1.4;padding-right:0}
+ .pbi-toolbar{display:contents}
+ #pbi-close{grid-column:2;grid-row:1 / 3;align-self:start}
+ #ia-site-prototype .pbi-header .pbi-external{grid-column:1;grid-row:2;min-height:36px;max-width:none;font-size:12px;width:fit-content}
+ .pbi-holder{flex:0 0 auto;width:100%;height:calc((100vw - 28px)*.5625 + 56px);min-height:200px;max-height:50vh;max-height:50svh}
+ .pbi-help{font-size:11px;line-height:1.6;padding:10px 16px}
+ .pbi-help:after{content:'Para ver más detalle, gira el teléfono o abre el tablero en Power BI.';display:block;margin-top:5px;color:#456477}
+}
+/* En horizontal se aprovecha la anchura sin dejar los controles fuera de vista. */
+@media(max-height:500px) and (orientation:landscape){
+ .pbi-dialog{width:calc(100% - 24px);height:calc(100vh - 24px);height:calc(100dvh - 24px);max-height:calc(100dvh - 24px);overflow:hidden}
+ .pbi-header{display:flex;min-height:52px;padding:4px 10px 4px 16px;gap:16px;position:static}
+ #ia-site-prototype .pbi-header h2{font-size:13px}
+ .pbi-toolbar{display:flex;gap:12px}
+ .pbi-holder{flex:1;min-height:0;height:auto;max-height:none}
+ .pbi-help{font-size:10px;line-height:1.4;padding:5px 16px}
+ .pbi-help:after{display:none}
+}
 @media(prefers-reduced-motion:reduce){#ia-site-prototype .dashboard-open{transition:none}}
