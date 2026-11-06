@@ -1,0 +1,110 @@
+{
+  "source": "https://sites.google.com/pucp.edu.pe/insight-analytics/dashboards",
+  "note": "Títulos, enlaces y degradados recuperados de las ocho incorporaciones originales. El contenido de los ocho informes no se ha verificado íntegramente.",
+  "dashboards": [
+    {
+      "id": 1,
+      "title": "Aseguramiento de la Calidad del Software",
+      "reportTitle": "Calidad del Software",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiZTIxMmJmYzgtZDk5Ni00ZTlmLWI5NGEtNzRhZDNkYWMyOGFmIiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "BUSINESS INTELLIGENCE · POWER BI",
+      "sourceFrame": "7cd01cccc5fa80cc_22",
+      "gradient": [
+        "#102C51",
+        "#164B7A",
+        "#126B9B"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Gestión de Proyectos",
+      "reportTitle": "Gestión de Proyectos",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiY2MyZTRlZjgtMWM1MC00NWY0LWFlNmQtZWZiNDQ4OGZjNGQ0IiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "PROJECT MANAGEMENT · POWER BI",
+      "sourceFrame": "7cd01cccc5fa80cc_17",
+      "gradient": [
+        "#102C51",
+        "#204B7C",
+        "#286A98"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Monitoreo de Pacientes Hospitalizados",
+      "reportTitle": "Monitoreo de Pacientes Hospitalizados",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiZTJlMzg5NzAtNDhlNy00ZGNlLWIzMzEtY2M4YTA1OWEzMTBiIiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "HEALTHCARE ANALYTICS · POWER BI",
+      "sourceFrame": "395cc50d273cf467_3",
+      "gradient": [
+        "#102C51",
+        "#16566D",
+        "#087E92"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Gestión del Talento y Operaciones",
+      "reportTitle": "Gestión del Talento y Operaciones",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiMzcxODQ5ZDktN2VmZS00M2ExLTliOWQtMDZhOTg5YWM4ZDY3IiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "PEOPLE & OPERATIONS ANALYTICS · POWER BI",
+      "sourceFrame": "395cc50d273cf467_6",
+      "gradient": [
+        "#102C51",
+        "#20576D",
+        "#267C80"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Gestión de Ventas",
+      "reportTitle": "Gestión de Ventas",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiMGZmOGY1NzktMWY2My00MGVhLTlhNWMtYjM3OWIxN2I2Mjk4IiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "SALES ANALYTICS · POWER BI",
+      "sourceFrame": "7cd01cccc5fa80cc_32",
+      "gradient": [
+        "#102C51",
+        "#244A82",
+        "#3864A3"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Seguimiento de Vuelos",
+      "reportTitle": "Seguimiento de Vuelos",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiZDgxMjAzZTctZDQxYi00YzY3LTk5YjctZmYzZDMyM2MxZTVkIiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "AVIATION ANALYTICS · POWER BI",
+      "sourceFrame": "7cd01cccc5fa80cc_35",
+      "gradient": [
+        "#102C51",
+        "#245678",
+        "#397FAD"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Personas Desaparecidas",
+      "reportTitle": "Personas Desaparecidas",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiZjY4NTZiODctM2QxOS00ODE3LWI4ZTgtMmZmMmIzN2U0MTFiIiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "PUBLIC SAFETY ANALYTICS · POWER BI",
+      "sourceFrame": "174525c1cda2f32d_3",
+      "gradient": [
+        "#102C51",
+        "#23425D",
+        "#3B6684"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Delitos Denunciados · Ministerio Público",
+      "reportTitle": "Delitos Denunciados",
+      "url": "https://app.powerbi.com/view?r=eyJrIjoiYmRkNDZlYTQtOWZmZS00ZGZiLTk4MzMtNDI1OGIyNGEzYTUyIiwidCI6IjBlMGNiMDYwLTA5YWQtNDlmNS1hMDA1LTY4YjliNDlhYTFmNiIsImMiOjR9",
+      "label": "JUSTICE & PUBLIC SAFETY ANALYTICS · POWER BI",
+      "sourceFrame": "174525c1cda2f32d_6",
+      "gradient": [
+        "#102C51",
+        "#304963",
+        "#536C83"
+      ]
+    }
+  ]
+}
